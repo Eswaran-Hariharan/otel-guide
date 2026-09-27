@@ -1,0 +1,108 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1260 820" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#eef1f6"/></linearGradient>
+    <linearGradient id="col" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#7048e8"/><stop offset="1" stop-color="#9775fa"/></linearGradient>
+    <marker id="aT" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#e8590c"/></marker>
+    <marker id="aM" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#1c7ed6"/></marker>
+    <marker id="aL" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#0a8f6f"/></marker>
+    <marker id="aG" markerWidth="11" markerHeight="11" refX="8" refY="4" orient="auto"><path d="M0,0 L9,4 L0,8 Z" fill="#495a6e"/></marker>
+    <style>
+      .h{font-size:15px;font-weight:800;fill:#fff}.hd{font-size:15px;font-weight:800;fill:#1b2a3a}
+      .b{font-size:12px;font-weight:700;fill:#fff}.bd{font-size:12px;font-weight:700;fill:#233}
+      .s{font-size:10px;fill:#5a6b7b}.sw{font-size:10px;fill:#fff;opacity:.92}
+      .lane{font-size:12px;font-weight:800;letter-spacing:.5px}.cap{font-size:11px;fill:#697786}
+      .sig{font-size:11px;font-weight:800}
+    </style>
+  </defs>
+  <rect width="1260" height="820" fill="url(#bg)"/>
+  <text x="40" y="44" font-size="24" font-weight="800" fill="#1b2a3a">OpenTelemetry — End-to-End Pipeline</text>
+  <text x="40" y="68" class="cap">Instrument once → ship via OTLP → Collector processes &amp; fans out → signal-specific stores → visualize &amp; alert. 🟠 traces · 🔵 metrics · 🟢 logs</text>
+
+  <!-- ===== 1. INSTRUMENTED APPS ===== -->
+  <rect x="36" y="92" width="250" height="360" rx="14" fill="#eef4ff" stroke="#1c7ed6" stroke-width="1.5"/>
+  <text x="52" y="116" class="lane" fill="#1862ab">① INSTRUMENTED APPS</text>
+  <g transform="translate(56,130)"><rect width="210" height="72" rx="10" fill="#fff" stroke="#1c7ed6" stroke-width="1.6"/><text x="14" y="26" class="bd">Service A</text><text x="14" y="44" class="s">OTel SDK (auto + manual)</text><text x="14" y="60" class="s">Java / Go / Python / JS…</text></g>
+  <g transform="translate(56,214)"><rect width="210" height="72" rx="10" fill="#fff" stroke="#1c7ed6" stroke-width="1.6"/><text x="14" y="26" class="bd">Service B</text><text x="14" y="44" class="s">auto-instrumentation</text><text x="14" y="60" class="s">HTTP · gRPC · DB traced</text></g>
+  <g transform="translate(56,298)"><rect width="210" height="72" rx="10" fill="#fff" stroke="#1c7ed6" stroke-width="1.6"/><text x="14" y="26" class="bd">Service C</text><text x="14" y="44" class="s">custom spans + metrics</text><text x="14" y="60" class="s">semantic conventions</text></g>
+  <text x="56" y="402" class="cap">Resource attrs: service.name,</text><text x="56" y="418" class="cap">version, environment.</text>
+  <text x="56" y="440" class="cap">W3C traceparent propagates context.</text>
+
+  <!-- OTLP arrow -->
+  <line x1="286" y1="270" x2="360" y2="270" stroke="#495a6e" stroke-width="3" marker-end="url(#aG)"/>
+  <text x="300" y="258" class="sig" fill="#495a6e">OTLP</text>
+  <text x="292" y="288" class="cap">gRPC :4317 / HTTP :4318</text>
+
+  <!-- ===== 2. COLLECTOR ===== -->
+  <rect x="360" y="118" width="330" height="316" rx="14" fill="#f3effe" stroke="#7048e8" stroke-width="2"/>
+  <text x="378" y="142" class="lane" fill="#5b34c9">② OTel / ADOT COLLECTOR</text>
+  <g transform="translate(378,154)"><rect width="294" height="72" rx="10" fill="url(#col)"/><text x="16" y="28" class="b">Receivers</text><text x="16" y="46" class="sw">OTLP · Prometheus · Jaeger ·</text><text x="16" y="62" class="sw">filelog · awsxray</text></g>
+  <g transform="translate(378,234)"><rect width="294" height="80" rx="10" fill="url(#col)"/><text x="16" y="26" class="b">Processors</text><text x="16" y="44" class="sw">batch · memory_limiter ·</text><text x="16" y="60" class="sw">attributes · tail_sampling ·</text><text x="16" y="74" class="sw">PII redaction</text></g>
+  <g transform="translate(378,322)"><rect width="294" height="72" rx="10" fill="url(#col)"/><text x="16" y="28" class="b">Exporters</text><text x="16" y="46" class="sw">OTLP · Prometheus ·</text><text x="16" y="62" class="sw">CloudWatch · X-Ray · Kafka</text></g>
+  <text x="378" y="418" class="cap">Agent (sidecar/DaemonSet) → Gateway (central) pattern</text>
+
+  <!-- three signal arrows fanning out -->
+  <line x1="690" y1="200" x2="770" y2="150" stroke="#e8590c" stroke-width="3" marker-end="url(#aT)"/>
+  <text x="700" y="176" class="sig" fill="#e8590c">TRACES</text>
+  <line x1="690" y1="274" x2="770" y2="330" stroke="#1c7ed6" stroke-width="3" marker-end="url(#aM)"/>
+  <text x="700" y="300" class="sig" fill="#1c7ed6">METRICS</text>
+  <line x1="690" y1="358" x2="770" y2="520" stroke="#0a8f6f" stroke-width="3" marker-end="url(#aL)"/>
+  <text x="700" y="440" class="sig" fill="#0a8f6f">LOGS</text>
+
+  <!-- ===== 3. BACKENDS ===== -->
+  <text x="784" y="112" class="lane" fill="#1b2a3a">③ STORAGE / BACKENDS</text>
+
+  <!-- Traces (orange) -->
+  <rect x="784" y="122" width="440" height="118" rx="12" fill="#fff4ec" stroke="#e8590c" stroke-width="1.6"/>
+  <text x="800" y="144" class="sig" fill="#c1440e">TRACES → trace stores</text>
+  <g transform="translate(800,152)"><rect width="130" height="72" rx="10" fill="#fff" stroke="#e8590c" stroke-width="1.4"/><text x="12" y="26" class="bd">Jaeger</text><text x="12" y="44" class="s">open source</text><text x="12" y="60" class="s">tracing + UI</text></g>
+  <g transform="translate(942,152)"><rect width="130" height="72" rx="10" fill="#fff" stroke="#e8590c" stroke-width="1.4"/><text x="12" y="26" class="bd">Tempo</text><text x="12" y="44" class="s">Grafana, S3-backed</text></g>
+  <g transform="translate(1084,152)"><rect width="126" height="72" rx="10" fill="#fff5ec" stroke="#e8590c" stroke-width="1.8"/><text x="12" y="26" class="bd">AWS X-Ray</text><text x="12" y="44" class="s">managed</text><text x="12" y="60" class="s">service map</text></g>
+
+  <!-- Metrics (blue) -->
+  <rect x="784" y="256" width="440" height="118" rx="12" fill="#eef4ff" stroke="#1c7ed6" stroke-width="1.6"/>
+  <text x="800" y="278" class="sig" fill="#1862ab">METRICS → time-series DBs</text>
+  <g transform="translate(800,286)"><rect width="130" height="72" rx="10" fill="#fff" stroke="#1c7ed6" stroke-width="1.4"/><text x="12" y="26" class="bd">Prometheus</text><text x="12" y="44" class="s">open source TSDB</text></g>
+  <g transform="translate(942,286)"><rect width="130" height="72" rx="10" fill="#eef4ff" stroke="#1c7ed6" stroke-width="1.8"/><text x="12" y="26" class="bd">Amazon AMP</text><text x="12" y="44" class="s">managed Prometheus</text></g>
+  <g transform="translate(1084,286)"><rect width="126" height="72" rx="10" fill="#eef4ff" stroke="#1c7ed6" stroke-width="1.8"/><text x="12" y="26" class="bd">CloudWatch</text><text x="12" y="44" class="s">metrics</text></g>
+
+  <!-- Logs (green) -->
+  <rect x="784" y="390" width="440" height="118" rx="12" fill="#e9fbf4" stroke="#0a8f6f" stroke-width="1.6"/>
+  <text x="800" y="412" class="sig" fill="#087a5e">LOGS → log stores</text>
+  <g transform="translate(800,420)"><rect width="130" height="72" rx="10" fill="#fff" stroke="#0a8f6f" stroke-width="1.4"/><text x="12" y="26" class="bd">Loki</text><text x="12" y="44" class="s">Grafana logs</text></g>
+  <g transform="translate(942,420)"><rect width="130" height="72" rx="10" fill="#fff" stroke="#0a8f6f" stroke-width="1.4"/><text x="12" y="26" class="bd">OpenSearch</text><text x="12" y="44" class="s">full-text</text></g>
+  <g transform="translate(1084,420)"><rect width="126" height="72" rx="10" fill="#e9fbf4" stroke="#0a8f6f" stroke-width="1.8"/><text x="12" y="26" class="bd">CW Logs</text><text x="12" y="44" class="s">managed</text></g>
+
+  <!-- ===== VISUALIZE ===== -->
+  <rect x="784" y="524" width="440" height="80" rx="12" fill="#fff" stroke="#334" stroke-width="1.6"/>
+  <text x="800" y="548" class="hd">④ VISUALIZE &amp; ALERT</text>
+  <text x="800" y="572" class="s">Grafana · Amazon Managed Grafana · CloudWatch dashboards</text>
+  <text x="800" y="590" class="s">Correlate metric → trace → log by trace/span IDs</text>
+  <!-- backends to visualize -->
+  <line x1="1004" y1="240" x2="1004" y2="256" stroke="#e8590c" stroke-width="2" marker-end="url(#aT)"/>
+  <line x1="1004" y1="374" x2="1004" y2="390" stroke="#1c7ed6" stroke-width="2" marker-end="url(#aM)"/>
+  <line x1="1004" y1="508" x2="1004" y2="524" stroke="#0a8f6f" stroke-width="2" marker-end="url(#aG)"/>
+
+  <!-- ===== GOLDEN SIGNALS ===== -->
+  <rect x="36" y="524" width="720" height="118" rx="14" fill="#fffbea" stroke="#f0b400" stroke-width="1.8"/>
+  <text x="52" y="548" class="lane" fill="#a67c00">⑤ THE FOUR GOLDEN SIGNALS (alert on these)</text>
+  <g transform="translate(52,558)"><rect width="165" height="66" rx="10" fill="#fff3bf" stroke="#f0b400" stroke-width="1.2"/><text x="14" y="26" class="bd">Latency</text><text x="14" y="44" class="s">p50 / p95 / p99</text><text x="14" y="59" class="s">split success vs error</text></g>
+  <g transform="translate(232,558)"><rect width="165" height="66" rx="10" fill="#fff3bf" stroke="#f0b400" stroke-width="1.2"/><text x="14" y="26" class="bd">Traffic</text><text x="14" y="44" class="s">requests / sec</text><text x="14" y="59" class="s">demand</text></g>
+  <g transform="translate(412,558)"><rect width="165" height="66" rx="10" fill="#fff3bf" stroke="#f0b400" stroke-width="1.2"/><text x="14" y="26" class="bd">Errors</text><text x="14" y="44" class="s">5xx / exceptions</text><text x="14" y="59" class="s">failure rate</text></g>
+  <g transform="translate(592,558)"><rect width="148" height="66" rx="10" fill="#fff3bf" stroke="#f0b400" stroke-width="1.2"/><text x="14" y="26" class="bd">Saturation</text><text x="14" y="44" class="s">CPU / mem / queue</text><text x="14" y="59" class="s">how full</text></g>
+
+  <!-- footer -->
+  <text x="40" y="680" class="cap" font-weight="700" fill="#233">One standard, many backends:</text>
+  <text x="40" y="700" class="cap">The OTel SDK + OTLP + Collector are backend-agnostic — swap Jaeger↔X-Ray, Prometheus↔AMP, Loki↔CloudWatch by changing exporter config, never app code.</text>
+  <text x="40" y="726" class="cap" font-weight="700" fill="#233">RED (services):</text><text x="150" y="726" class="cap">Rate · Errors · Duration.</text>
+  <text x="340" y="726" class="cap" font-weight="700" fill="#233">USE (resources):</text><text x="460" y="726" class="cap">Utilization · Saturation · Errors.</text>
+
+  <!-- legend -->
+  <g transform="translate(40,760)">
+    <rect width="16" height="12" rx="2" fill="#e8590c"/><text x="24" y="11" class="cap">Traces</text>
+    <rect x="120" width="16" height="12" rx="2" fill="#1c7ed6"/><text x="144" y="11" class="cap">Metrics</text>
+    <rect x="240" width="16" height="12" rx="2" fill="#0a8f6f"/><text x="264" y="11" class="cap">Logs</text>
+    <rect x="340" width="16" height="12" rx="2" fill="#7048e8"/><text x="364" y="11" class="cap">Collector</text>
+    <rect x="470" width="16" height="12" rx="2" fill="#f0b400"/><text x="494" y="11" class="cap">Golden signals</text>
+    <text x="640" y="11" class="cap">Darker-bordered boxes = AWS-managed (ADOT, AMP, X-Ray, CloudWatch).</text>
+  </g>
+</svg>
